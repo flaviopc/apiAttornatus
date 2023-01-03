@@ -25,5 +25,5 @@ public class Pessoa {
     private LocalDate nascimento;
 
     @OneToMany(mappedBy = "pessoa")
-    private List<Endereco> endereco;
+    private List<Endereco> enderecos;
 }

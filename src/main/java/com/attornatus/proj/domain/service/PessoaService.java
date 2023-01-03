@@ -1,8 +1,12 @@
 package com.attornatus.proj.domain.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.attornatus.proj.api.converter.PessoaConverter;
+import com.attornatus.proj.api.dto.PessoaDto;
 import com.attornatus.proj.domain.exception.PessoaNaoEncontradaException;
 import com.attornatus.proj.domain.model.Pessoa;
 import com.attornatus.proj.domain.repository.PessoaRepository;
@@ -12,8 +16,15 @@ public class PessoaService {
     @Autowired
     private PessoaRepository repository;
 
-    public Pessoa salvar(Pessoa pessoa) {
-        return repository.save(pessoa);
+    @Autowired
+    private PessoaConverter pessoaConverter;
+
+    public List<PessoaDto> exibirTodas() {
+        return pessoaConverter.toListDTO(repository.findAll());
+    }
+
+    public PessoaDto salvar(Pessoa pessoa) {
+        return pessoaConverter.toDTO(repository.save(pessoa));
     }
 
     public Pessoa buscar(Long id) {
@@ -21,10 +32,10 @@ public class PessoaService {
                 () -> new PessoaNaoEncontradaException(String.format("Pessoa de código %d não existe", id)));
     }
 
-    public Pessoa atualizar(Long id, Pessoa pessoaNova) {
+    public PessoaDto atualizar(Long id, Pessoa pessoaNova) {
         Pessoa pessoaSalva = buscar(id);
         pessoaSalva.setNascimento(pessoaNova.getNascimento());
         pessoaSalva.setNome(pessoaNova.getNome());
-        return repository.save(pessoaSalva);
+        return pessoaConverter.toDTO(repository.save(pessoaSalva));
     }
 }
