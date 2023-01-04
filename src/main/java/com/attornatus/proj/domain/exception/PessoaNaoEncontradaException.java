@@ -1,7 +1,7 @@
 package com.attornatus.proj.domain.exception;
 
-public class PessoaNaoEncontradaException extends RuntimeException{
-    public PessoaNaoEncontradaException(String msg){
+public class PessoaNaoEncontradaException extends EntidadeNaoEncontrada {
+    public PessoaNaoEncontradaException(String msg) {
         super(msg);
     }
 }

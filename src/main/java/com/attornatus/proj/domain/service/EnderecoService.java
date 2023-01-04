@@ -16,6 +16,7 @@ public class EnderecoService {
     private EnderecoConverter enderecoConverter;
 
     public EnderecoDto salvar(Endereco endereco) {
+        endereco.setPrincipal(false);
         return enderecoConverter.toDTO(enderecoRepository.save(endereco));
     }
 }

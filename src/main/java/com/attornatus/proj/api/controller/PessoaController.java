@@ -42,12 +42,18 @@ public class PessoaController {
     public EnderecoDto salvarEndereco(@PathVariable Long id, @RequestBody Endereco endereco) {
         Pessoa pessoa = pessoaService.buscar(id);
         endereco.setPessoa(pessoa);
-        return enderecoService.salvar(endereco);
+        EnderecoDto enderecoDto = enderecoService.salvar(endereco);
+        return enderecoDto;
     }
 
     @PutMapping("/{id}")
     public PessoaDto alterar(@PathVariable Long id, @RequestBody Pessoa pessoa) {
         return pessoaService.atualizar(id, pessoa);
+    }
+
+    @PutMapping("/{pessoaId}/enderecos/{enderecoId}/principal")
+    public PessoaDto alterarEnderecoPrincipal(@PathVariable Long pessoaId, @PathVariable Long enderecoId) {
+        return pessoaService.definirEnderecoPrincipal(pessoaId, enderecoId);
     }
 
     @GetMapping()

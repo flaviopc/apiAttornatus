@@ -24,6 +24,8 @@ public class Endereco {
     private String numero;
     @Column(nullable = false)
     private String cidade;
+    @Column(nullable = false)
+    private boolean principal;
 
     @ManyToOne
     private Pessoa pessoa;
